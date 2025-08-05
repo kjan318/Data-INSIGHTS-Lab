@@ -27,6 +27,41 @@
             font-size: 0.75rem;
             font-weight: 500;
         }
+        /* Styles for the new profile picture uploader */
+        .profile-picture-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            border-radius: 9999px;
+            object-fit: cover;
+            border: 4px solid #374151; /* border-gray-700 */
+        }
+        .profile-picture-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 9999px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        .profile-picture-container:hover .profile-picture-overlay {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -54,7 +89,7 @@
         <section id="hero" class="bg-gray-900 text-white h-screen flex items-center justify-center text-center">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-                    <span class="block">Your Name Here</span>
+                    <span class="block">Kieso Jan</span>
                     <span class="block text-blue-400 mt-2">HR Technology Strategist & Product Designer</span>
                 </h1>
                 <p class="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-gray-400">
@@ -73,13 +108,24 @@
                     <h2 class="text-3xl font-extrabold text-white sm:text-4xl">About Me</h2>
                     <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">A brief introduction to my background and passion.</p>
                 </div>
-                <div class="mt-12 max-w-3xl mx-auto text-lg text-gray-300 space-y-6">
-                    <p>
-                        I am a senior HR technology strategist with a passion for transforming human resources through innovative data solutions. With a deep background in both product management and UI/UX design, I specialize in bridging the gap between complex HR challenges and elegant, user-centric applications. My work focuses on creating tools that not only solve problems but also empower leaders to make smarter, data-driven decisions about their most valuable asset: their people.
-                    </p>
-                    <p>
-                        From designing comprehensive position management dashboards like ORG VISION to developing interactive workshop applications and authoring strategic roll-out plans, my experience is centered on delivering tangible business value. I thrive on turning high-level strategy into practical, maintainable, and impactful technology that enhances the employee experience and drives organizational success.
-                    </p>
+                <div class="mt-12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
+                    <!-- Profile Picture Column -->
+                    <div class="md:col-span-1">
+                        <label for="profile-picture-input" class="profile-picture-container">
+                            <img id="profile-picture-img" src="https://placehold.co/150x150/374151/d1d5db?text=Upload" alt="Your Name" class="profile-picture">
+                            <div class="profile-picture-overlay">Click to Upload</div>
+                        </label>
+                        <input type="file" id="profile-picture-input" class="hidden" accept="image/*">
+                    </div>
+                    <!-- Text Column -->
+                    <div class="md:col-span-2 text-lg text-gray-300 space-y-6">
+                        <p>
+                            I am a senior HR technology strategist with a passion for transforming human resources through innovative data solutions. With a deep background in both product management and UI/UX design, I specialize in bridging the gap between complex HR challenges and elegant, user-centric applications. My work focuses on creating tools that not only solve problems but also empower leaders to make smarter, data-driven decisions about their most valuable asset: their people.
+                        </p>
+                        <p>
+                            From designing comprehensive position management dashboards like ORG VISION to developing interactive workshop applications and authoring strategic roll-out plans, my experience is centered on delivering tangible business value. I thrive on turning high-level strategy into practical, maintainable, and impactful technology that enhances the employee experience and drives organizational success.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -126,8 +172,8 @@
                     <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
             </div>
-            <p class="mt-8 text-center text-base text-gray-400">&copy; 2025 Your Name. All rights reserved.</p>
-            <p class="mt-2 text-center text-sm text-gray-500">your.email@example.com</p>
+            <p class="mt-8 text-center text-base text-gray-400">&copy; 2025 Kieso Jan. All rights reserved.</p>
+            <p class="mt-2 text-center text-sm text-gray-500">kieso.jan@example.com</p>
         </div>
     </footer>
 
@@ -143,9 +189,34 @@
                 });
             });
 
+            // === PROFILE PICTURE UPLOADER LOGIC ===
+            const profilePicInput = document.getElementById('profile-picture-input');
+            const profilePicImg = document.getElementById('profile-picture-img');
+            const localStorageKey = 'userProfilePicture';
+
+            // Load saved picture from local storage on page load
+            const savedImage = localStorage.getItem(localStorageKey);
+            if (savedImage) {
+                profilePicImg.src = savedImage;
+            }
+
+            profilePicInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const imageUrl = e.target.result;
+                        profilePicImg.src = imageUrl;
+                        // Save the image to local storage
+                        localStorage.setItem(localStorageKey, imageUrl);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
             // === CONTENT MANAGEMENT AREA ===
             // To add a new project or article, simply copy an object and paste it into the correct array below.
-            // For images, it's best to create an 'images' folder next to your index.html file and link to them like 'images/your-image.png'.
             
             const projects = [
                 {
@@ -199,9 +270,6 @@
 
             // --- DYNAMIC RENDERING FUNCTIONS ---
 
-            /**
-             * Renders the project cards into the projects grid.
-             */
             function renderProjects() {
                 const projectsGrid = document.getElementById('projects-grid');
                 if (!projectsGrid) return;
@@ -220,9 +288,6 @@
                 `).join('');
             }
 
-            /**
-             * Renders the article cards into the articles list.
-             */
             function renderArticles() {
                 const articlesList = document.getElementById('articles-list');
                 if (!articlesList) return;
