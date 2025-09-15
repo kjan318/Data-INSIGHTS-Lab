@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People Analytics KPI Strategic Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc;
+        }
+        .glossy-card { 
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            color: #475569;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+        .nav-link:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        
+        .accordion-trigger {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .accordion-trigger:hover {
+            background-color: #f8fafc;
+        }
+        .accordion-content-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-content {
+            overflow: hidden;
+        }
+        .accordion-item.active .chevron {
+            transform: rotate(180deg);
+        }
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Color Theme Styles */
+        :root {
+            --c1: #0ea5e9; --c2: #10b981; --c3: #ef4444; --c4: #6366f1; --c5: #f59e0b;
+            --c6: #22c55e; --c7: #a855f7; --c8: #06b6d4; --c9: #64748b; --c10: #f97316;
+        }
+        .theme-1-text { color: var(--c1); } .theme-1-border { border-color: var(--c1); } .theme-1-bg-active { background-color: var(--c1); }
+        .theme-2-text { color: var(--c2); } .theme-2-border { border-color: var(--c2); } .theme-2-bg-active { background-color: var(--c2); }
+        .theme-3-text { color: var(--c3); } .theme-3-border { border-color: var(--c3); } .theme-3-bg-active { background-color: var(--c3); }
+        .theme-4-text { color: var(--c4); } .theme-4-border { border-color: var(--c4); } .theme-4-bg-active { background-color: var(--c4); }
+        .theme-5-text { color: var(--c5); } .theme-5-border { border-color: var(--c5); } .theme-5-bg-active { background-color: var(--c5); }
+        .theme-6-text { color: var(--c6); } .theme-6-border { border-color: var(--c6); } .theme-6-bg-active { background-color: var(--c6); }
+        .theme-7-text { color: var(--c7); } .theme-7-border { border-color: var(--c7); } .theme-7-bg-active { background-color: var(--c7); }
+        .theme-8-text { color: var(--c8); } .theme-8-border { border-color: var(--c8); } .theme-8-bg-active { background-color: var(--c8); }
+        .theme-9-text { color: var(--c9); } .theme-9-border { border-color: var(--c9); } .theme-9-bg-active { background-color: var(--c9); }
+        .theme-10-text { color: var(--c10); } .theme-10-border { border-color: var(--c10); } .theme-10-bg-active { background-color: var(--c10); }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row">
+            <!-- Sticky Navigation -->
+            <aside class="w-full lg:w-1/4 lg:sticky top-0 h-full lg:h-screen p-4 md:p-8">
+                <div class="py-4">
+                    <h2 class="text-xl font-bold text-slate-900">Framework Navigator</h2>
+                    <p class="text-sm text-slate-500 mt-1">Jump to a strategic theme.</p>
+                    <nav id="nav-menu" class="mt-8 space-y-2">
+                        <!-- Nav links will be dynamically generated here -->
+                    </nav>
+                     <a href="KPI_index_glossy.html" class="mt-8 block text-center w-full bg-slate-200 text-slate-700 font-semibold py-2 px-4 rounded-md hover:bg-slate-300 transition-colors">Back to Dashboard Hub</a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="w-full lg:w-3/4 p-4 md:p-8">
+                <header class="mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">People Analytics KPI Framework</h1>
+                    <p class="mt-4 text-lg text-slate-600">An interactive guide to the key metrics that enable data-driven HR decision-making. Each KPI is detailed with its strategic purpose, formula, and the data required for its calculation.</p>
+                </header>
+
+                <!-- Section Template -->
+                <div id="sections-container">
+                    <!-- Sections will be dynamically generated here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const kpiData = [
+            { id: 'talent-acquisition', title: '1. Talent Acquisition Excellence', theme: 1, dashboardUrl: 'Dashboard 1 Talent Acquisition Excellence.html', kpis: [
+                { name: 'Qualified Applicant Rate', purpose: 'Measures the efficiency of the top of the recruitment funnel. A low rate indicates sourcing strategies attract unsuitable candidates, wasting recruiter time. A high rate suggests effective targeting.', formula: '(Number of Qualified Applicants / Total Number of Applicants) * 100', prereqs: 'ATS with a clear status for each applicant. Requires Applicant_ID, Job_Requisition_ID, Qualification_Status.' },
+                { name: 'Source of Hire Effectiveness', purpose: 'Determines the ROI of different recruiting channels to optimize budget allocation. It answers: "Where should we invest to get the best talent?"', formula: '(Number of Hires from Source / Total Hires) * 100', prereqs: 'ATS data where every hire is tagged with their original source. Requires Hire_ID, Application_Source_Channel.' },
+                { name: 'Talent Pool Growth Rate', purpose: 'Measures the effectiveness of employer branding and passive candidate engagement. A healthy growth rate builds a strong pipeline for future roles, reducing future hiring costs.', formula: '((Pool Size End - Pool Size Start) / Pool Size Start) * 100', prereqs: 'CRM or talent pool database that tracks the total number of candidates over time. Requires Talent_Pool_ID, Date_Range_Start, Date_Range_End.' },
+                { name: 'Pool-to-Hire Rate', purpose: 'Measures the ROI of maintaining a passive talent network. A high rate proves that talent pooling is an effective strategy that reduces future Time to Fill and Cost per Hire.', formula: '(Number of Hires from Talent Pool / Total Hires) * 100', prereqs: 'ATS/CRM data that can distinguish hires sourced from the talent pool versus other active channels. Requires Hire_ID, Hire_Source.' },
+                { name: 'Cost per Hire', purpose: 'Measures the total financial investment to hire a new employee. A critical efficiency metric for managing the recruitment budget.', formula: '(Total Internal Recruiting Costs + Total External Recruiting Costs) / Total Number of Hires', prereqs: 'Financial data on all recruiting costs and HRIS data on the total number of hires in a period.' },
+                { name: 'Time to Fill', purpose: 'Measures the speed of the entire recruitment process. Long Time to Fill can result in lost productivity from vacant roles and a higher risk of losing top candidates to competitors.', formula: 'Average(Offer_Acceptance_Date - Requisition_Approval_Date)', prereqs: 'ATS data with accurate timestamps for key recruitment stages. Requires Requisition_ID, Requisition_Approval_Date, Offer_Acceptance_Date.' },
+                { name: 'Offer Acceptance Rate', purpose: 'Measures the competitiveness of your job offers. A low rate can indicate issues with compensation, culture, or a slow offer process.', formula: '(Number of Offers Accepted / Total Offers Extended) * 100', prereqs: 'ATS data that tracks the status of every formal offer extended. Requires Offer_ID, Offer_Status.' },
+                { name: 'Candidate Experience Score (CXS)', purpose: 'Measures a candidate\'s overall perception of the recruitment process. A positive experience boosts the employer brand, even from rejected candidates.', formula: 'Average score from candidate experience surveys.', prereqs: 'Data from candidate experience surveys deployed at key stages of the hiring process. Requires Candidate_ID, Survey_ID, Survey_Question_Scores.' },
+                { name: 'Recruitment Funnel Conversion Rate', purpose: 'Diagnoses bottlenecks within the recruitment process by tracking stage-to-stage progression.', formula: '(Number of Candidates in Stage N+1 / Number of Candidates in Stage N) * 100', prereqs: 'ATS data that accurately tracks each candidate\'s progression through defined hiring stages. Requires Application_ID, Recruitment_Stage.' },
+                { name: 'Quality of Hire', purpose: 'Measures the ultimate success of recruitment by assessing the value a new hire brings. This connects hiring decisions to business outcomes like performance and retention.', formula: '(Avg 1st-Year Perf. Rating / 5) * (1 - 1st-Year Turnover Rate) * Avg Hiring Manager Satisfaction Score', prereqs: 'HRIS data (Hire_Date, Termination_Date), performance management data (Performance_Rating), and hiring manager satisfaction survey data.' },
+                { name: 'Hiring Manager Satisfaction', purpose: 'Measures the satisfaction of the internal "customer" of recruitment. High satisfaction indicates the recruiting team understands business needs and delivers high-quality candidates.', formula: 'Average score from a post-hire survey sent to hiring managers.', prereqs: 'Data from post-hire surveys sent to hiring managers. Requires Hiring_Manager_ID, Requisition_ID, Satisfaction_Survey_Score.' },
+                { name: 'New Hire Turnover Rate (90-Day)', purpose: 'Diagnoses issues in the hiring or onboarding process. High early turnover is a costly red flag suggesting a mismatch in expectations or a poor job fit.', formula: '(Hires Who Left < 90 Days / Total Hires in Period) * 100', prereqs: 'HRIS data that tracks employee start and termination dates. Requires Employee_ID, Hire_Date, Termination_Date.' },
+                { name: 'Time to Productivity', purpose: 'Measures the effectiveness of the onboarding program. A shorter time to productivity means a faster return on hiring investment.', formula: 'Average(Full_Productivity_Date - Hire_Date)', prereqs: 'HRIS data (Hire_Date) and a defined milestone for "full productivity," often from a manager assessment.' },
+            ]},
+            { id: 'performance-mobility', title: '2. Performance & Internal Mobility', theme: 2, dashboardUrl: 'Dashboard 2- Performance & Internal Mobility.html', kpis: [
+                { name: 'Goal Completion Rate', purpose: 'Measures the alignment and execution of the workforce against company objectives. A low rate can signal issues with the performance management process, resource allocation, or employee engagement.', formula: '(Employees with Completed Goals / Total Employees in Cycle) * 100', prereqs: 'Performance Management System data that tracks the status of individual goals. Requires Employee_ID, Performance_Cycle, Goal_Status.' },
+                { name: 'Internal Mobility Rate', purpose: 'Measures the effectiveness of developing and promoting talent from within. A high rate indicates strong career pathing, which boosts retention. A low rate may suggest talent hoarding or lack of opportunity.', formula: '(Positions Filled Internally / Total Positions Filled) * 100', prereqs: 'HRIS data that distinguishes between internal and external hires. Requires Requisition_ID, Hire_Type, New_Job_ID.' },
+                { name: 'Apprentice Conversion Rate', purpose: 'Measures the ROI of apprenticeship programs as a talent pipeline. A high rate demonstrates that the program is successfully developing needed skills.', formula: '(Apprentices Hired / Apprentices Graduated) * 100', prereqs: 'Program management and HRIS data to track apprentice employment status. Requires Apprentice_ID, Program_Completion_Date.' }
+            ]},
+            { id: 'retention-engagement', title: '3. Employee Retention & Engagement', theme: 3, dashboardUrl: 'Dashboard 3-Employee Retention & Engagement.html', kpis: [
+                { name: 'High-Performer Turnover Rate', purpose: 'Measures the attrition of the most critical employee segment. Losing high performers has a disproportionately negative impact on business performance.', formula: '(Number of High-Performers who Voluntarily Left / Total Number of High-Performers) * 100', prereqs: 'Performance Management data (Performance_Rating) and HRIS data (Termination_Date, Termination_Type).' },
+                { name: 'High-Potential Employee Turnover', purpose: 'Measures the attrition of the future leadership pipeline. Losing high-potential employees jeopardizes long-term succession plans and future growth.', formula: '(HiPo Employees Who Left / Total HiPo Employees) * 100', prereqs: 'Talent management system or HRIS that flags employees as "High-Potential", combined with HRIS turnover data.' },
+                { name: 'Employee Net Promoter Score (eNPS)', purpose: 'Measures employee loyalty and willingness to advocate for the company. A simple, powerful indicator of overall engagement and culture.', formula: '% of Promoters - % of Detractors', prereqs: 'Data from employee engagement or pulse surveys. Requires Survey_Response_ID, Employee_ID, Score (0-10).' },
+                { name: 'Survey Participation Rate', purpose: 'Measures employee engagement with feedback mechanisms. A high rate suggests trust in the process. A low rate can indicate survey fatigue or lack of faith in leadership.', formula: '(Survey Responses / Total Employees Invited) * 100', prereqs: 'Survey platform data that tracks responses against employees invited. Requires Employee_ID, Survey_ID, Response_Status.' }
+            ]},
+            { id: 'leadership-succession', title: '4. Leadership Effectiveness & Succession', theme: 4, dashboardUrl: 'Dashboard 4-Leadership Effectiveness & Succession.html', kpis: [
+                 { name: 'Manager Effectiveness Score', purpose: 'Provides a holistic view of a manager\'s impact by combining team feedback with team outcomes (turnover, performance).', formula: 'Weighted average of scores from manager effectiveness surveys and key team metrics.', prereqs: 'Upward feedback survey data, team engagement scores, team turnover data, and team performance data from multiple systems.' },
+                { name: 'Executive Bench Strength', purpose: 'Measures the readiness of the leadership pipeline for the most critical executive roles. A low score represents a significant strategic risk to business continuity.', formula: '(Exec Positions with Ready Successors / Total Exec Positions) * 100', prereqs: 'Succession planning data from a talent management system. Requires Position_ID, Successor_Employee_ID, Successor_Readiness_Level.' },
+                { name: 'Span of Control', purpose: 'Measures the average number of direct reports per manager. An unusual number can indicate opportunities for organizational redesign.', formula: 'Total Employees / Total Managers', prereqs: 'HRIS data containing employee-manager reporting lines. Requires Employee_ID, Manager_ID.' },
+                { name: 'Diversity in Leadership', purpose: 'Measures the representation of underrepresented groups in leadership. A critical indicator of an inclusive culture and equitable opportunity.', formula: '(Leaders from Underrepresented Group / Total Leaders) * 100', prereqs: 'HRIS data combining employee demographics with their leadership level. Requires Employee_ID, Is_Leader, Leadership_Level, Demographic_Data.' }
+            ]},
+            { id: 'skills-capability', title: '5. Skills & Capability for the Future', theme: 5, dashboardUrl: 'Dashboard 5 Skills & Capability for the Future.html', kpis: [
+                { name: 'Skill Gap Percentage', purpose: 'Identifies the most critical capability gaps across the organization, directing L&D investments to areas of greatest strategic need.', formula: '(Roles with Critical Skill Gaps / Total Critical Roles) * 100', prereqs: 'Data from a skills assessment platform or performance management system. Requires Role_ID, Required_Skill_ID, Employee_Skill_Assessment.' },
+                { name: 'Training Completion Rate', purpose: 'Measures adherence to assigned learning programs. A foundational metric for ensuring compliance and gauging engagement with L&D initiatives.', formula: '(Employees Who Completed / Employees Assigned) * 100', prereqs: 'Learning Management System (LMS) data. Requires Employee_ID, Course_ID, Completion_Status.' },
+                { name: 'Training Effectiveness Score', purpose: 'Measures the impact of training on employee skills. Crucial for evaluating the ROI of L&D programs and ensuring they deliver tangible business value.', formula: 'Average score from post-training effectiveness surveys.', prereqs: 'Data from post-training assessments or surveys. Requires Pre_Training_Assessment_Score, Post_Training_Assessment_Score.' },
+                { name: 'Reskilling/Upskilling Rate', purpose: 'Measures the proactive effort to prepare the workforce for future roles. A high rate indicates a commitment to long-term talent sustainability.', formula: '(Employees in Reskilling Programs / Total Employees) * 100', prereqs: 'LMS or HRIS data tracking enrollment in specific reskilling programs. Requires Employee_ID, Reskilling_Program_Enrollment.' }
+            ]},
+             { id: 'compensation-equity', title: '6. Compensation & Pay Equity', theme: 6, dashboardUrl: 'Dashboard 6 Compensation & Pay Equity.html', kpis: [
+                { name: 'Compensation Competitiveness Ratio', purpose: 'Measures how company salaries compare to the external market. A ratio below 1.0 indicates a potential disadvantage in attracting and retaining talent.', formula: 'Company_Average_Salary / Market_Average_Salary', prereqs: 'HRIS salary data and external market salary benchmark data. Requires Role_ID, Company_Average_Salary, Market_Data_Salary.' },
+                { name: 'Compa-Ratio', purpose: 'Measures where an employee\'s salary falls within their designated pay range. A core metric for internal pay management and fairness.', formula: 'Employee_Salary / Salary_Range_Midpoint', prereqs: 'HRIS data. Requires Employee_ID, Employee_Salary, Salary_Range_Midpoint.' },
+                { name: 'Pay Equity Gap', purpose: 'Diagnoses pay disparities between different demographic groups in similar roles. A critical metric for mitigating legal risk and building a fair culture.', formula: '((Avg Pay Group A - Avg Pay Group B) / Avg Pay Group A) * 100', prereqs: 'HRIS data combining salary, role, and demographic data. Requires Employee_ID, Salary, Job_Level, Demographic_Data.' },
+                { name: 'Benefits Participation Rate', purpose: 'Measures employee engagement with voluntary benefits. Low participation may signal a need for better communication or program redesign.', formula: '(Employees Enrolled / Total Eligible Employees) * 100', prereqs: 'Benefits administration system data. Requires Employee_ID, Benefit_Plan_ID, Enrollment_Status.' }
+            ]},
+            { id: 'workforce-planning', title: '7. Strategic Workforce Planning', theme: 7, dashboardUrl: 'Dashboard 7 Strategic Workforce Planning & Health.html', kpis: [
+                { name: 'Vacancy Rate', purpose: 'Measures the percentage of unfilled positions. A high vacancy rate, especially in critical roles, can strain existing employees and impact productivity.', formula: '(Open Positions / Total Positions) * 100', prereqs: 'HRIS and position management system data. Requires Position_ID, Position_Status.' },
+                { name: 'Revenue per Employee', purpose: 'Measures the financial productivity of the workforce, providing a high-level view of organizational efficiency.', formula: 'Total Company Revenue / Total Number of FTE Employees', prereqs: 'Company financial data (Total_Company_Revenue) and HRIS headcount data (Total_FTE_Employees).' },
+                { name: 'Forecast Accuracy', purpose: 'Measures the reliability of workforce planning models. High accuracy enables better budgeting and strategic resource allocation.', formula: '(1 - (Absolute(Actual Headcount - Forecasted Headcount) / Actual Headcount)) * 100', prereqs: 'Workforce planning system data (Forecasted_Headcount) and HRIS data (Actual_Headcount).' }
+            ]},
+            { id: 'deib', title: '8. DEI & Well-being', theme: 8, dashboardUrl: 'Dashboard 8 Diversity, Equity, Inclusion & Well-being.html', kpis: [
+                { name: 'Employee Well-being Index', purpose: 'Provides a holistic measure of the workforce\'s health, acting as a leading indicator of potential burnout, stress, and disengagement.', formula: 'A weighted average of key survey question scores related to burnout, stress, work-life balance, etc.', prereqs: 'Data from well-being surveys, benefits utilization data (e.g., EAP usage), and sick leave data.' },
+                { name: 'Inclusion Index', purpose: 'Measures the degree to which employees feel they belong and can contribute fully. Inclusion is a direct measure of culture and a key driver of retention and innovation.', formula: 'Average agreement score across a set of specific survey questions about belonging, equity, and voice.', prereqs: 'Data from specific inclusion-focused questions within an engagement survey. Requires Employee_ID, Inclusion_Survey_Scores.' },
+                { name: 'Diversity in Leadership', purpose: 'Measures the representation of underrepresented groups in leadership. A critical outcome metric for DEI strategy, indicating equitable opportunities for advancement.', formula: '(Leaders from Underrepresented Group / Total Leaders) * 100', prereqs: 'HRIS data combining employee demographics with their leadership level. Requires Employee_ID, Is_Leader, Leadership_Level, Demographic_Data.' }
+            ]},
+            { id: 'hr-operations', title: '9. HR Operations & Service Delivery', theme: 9, dashboardUrl: 'Dashboard 9 HR Operations & Service Delivery.html', kpis: [
+                { name: 'HR Process Automation Rate', purpose: 'Measures the maturity and efficiency of HR operations. A low rate indicates heavy reliance on manual work, which is prone to error and not scalable.', formula: '(Automated Processes / Total HR Processes) * 100', prereqs: 'An inventory of all HR processes with their current automation status. Requires Process_ID, Automation_Status.' },
+                { name: 'HR Ticket Resolution Time', purpose: 'Measures the efficiency and responsiveness of the HR support function. A long resolution time can lead to employee frustration and a poor perception of HR.', formula: 'Average(Ticket_Resolution_Date - Ticket_Creation_Date)', prereqs: 'HR Ticketing System data. Requires Ticket_ID, Ticket_Creation_Date, Ticket_Resolution_Date.' },
+                { name: 'HRIS Self-Service Adoption', purpose: 'Measures how effectively employees are using self-service tools. Higher adoption reduces the administrative burden on the HR team.', formula: '(Active Self-Service Users / Total Employees) * 100', prereqs: 'HRIS user activity or login data. Requires Employee_ID, Last_Self_Service_Login_Date.' }
+            ]},
+            { id: 'future-of-work', title: '10. Future of Work, Risk & Compliance', theme: 10, dashboardUrl: 'Dashboard 10 Future of Work, Risk & Compliance.html', kpis: [
+                { name: 'Remote/Hybrid Work Effectiveness', purpose: 'Assesses whether remote/hybrid work models are sustainable and productive by comparing performance and engagement across work locations.', formula: 'Average Performance_Rating and Engagement_Score segmented by Work_Location.', prereqs: 'HRIS data (Work_Location), performance management data (Performance_Rating), and engagement survey data (Engagement_Score).' },
+                { name: 'Mandatory Training Compliance Rate', purpose: 'Measures adherence to legally required training. A rate below 100% signals a significant legal, safety, or operational risk.', formula: '(Employees with Completed Training / Total Employees) * 100', prereqs: 'Learning Management System (LMS) data. Requires Employee_ID, Training_ID, Is_Mandatory, Completion_Status, Due_Date.' },
+                { name: 'Data Accuracy Rate', purpose: 'Measures the reliability and integrity of the core HRIS data. Inaccurate people data undermines all analytics, leading to flawed insights and poor decisions.', formula: '(Number of Accurate Records / Total Records Audited) * 100', prereqs: 'Results from a formal audit of HRIS records. Requires Employee_Record_ID, Audit_Date, Audit_Result.' }
+            ]}
+        ];
+
+        const sectionsContainer = document.getElementById('sections-container');
+        const navMenu = document.getElementById('nav-menu');
+
+        kpiData.forEach(sectionData => {
+            // Create Nav Link
+            const navLink = document.createElement('a');
+            navLink.href = `#${sectionData.id}`;
+            navLink.className = `nav-link theme-${sectionData.theme}-border`;
+            navLink.textContent = sectionData.title;
+            navMenu.appendChild(navLink);
+
+            // Create Section Content
+            const section = document.createElement('section');
+            section.id = sectionData.id;
+            section.className = 'mb-12';
+
+            let kpisHtml = sectionData.kpis.map(kpi => `
+                <div class="accordion-item border-b border-slate-200">
+                    <div class="accordion-trigger flex justify-between items-center p-4">
+                        <h4 class="font-semibold text-slate-800">${kpi.name}</h4>
+                        <svg class="chevron w-5 h-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <div class="accordion-content-wrapper">
+                        <div class="accordion-content px-4 pb-4">
+                            <div class="border-l-4 theme-${sectionData.theme}-border pl-4 space-y-4 pt-2">
+                                <div>
+                                    <h5 class="font-bold text-slate-700">Strategic Purpose</h5>
+                                    <p class="text-sm text-slate-600 mt-1">${kpi.purpose}</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-slate-700">Calculation Formula</h5>
+                                    <p class="text-sm text-slate-600 mt-1 font-mono bg-slate-100 p-2 rounded-md">${kpi.formula}</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-slate-700">Data Prerequisites</h5>
+                                    <p class="text-sm text-slate-600 mt-1 font-mono bg-slate-100 p-2 rounded-md">${kpi.prereqs}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            const dashboardLink = sectionData.dashboardUrl; // Use the new dashboardUrl property
+            section.innerHTML = `
+                <a href="${dashboardLink}" target="_blank" class="group inline-flex items-center space-x-3 mb-1" title="Click to view the interactive dashboard for this theme">
+                    <h2 class="text-3xl font-bold tracking-tight theme-${sectionData.theme}-text group-hover:underline">${sectionData.title}</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+                <div class="mt-4 glossy-card">
+                    ${kpisHtml}
+                </div>
+            `;
+
+            sectionsContainer.appendChild(section);
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const parent = trigger.parentElement;
+                const contentWrapper = parent.querySelector('.accordion-content-wrapper');
+
+                if (parent.classList.contains('active')) {
+                    parent.classList.remove('active');
+                    contentWrapper.style.maxHeight = null;
+                } else {
+                    parent.classList.add('active');
+                    contentWrapper.style.maxHeight = contentWrapper.scrollHeight + "px";
+                }
+            });
+        });
+
+        // Scrollspy for navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('main section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active', 'text-white');
+                kpiData.forEach(d => link.classList.remove(`theme-${d.theme}-bg-active`));
+
+                if (link.getAttribute('href') === `#${current}`) {
+                    const themeId = kpiData.find(d => d.id === current).theme;
+                    link.classList.add('active', 'text-white', `theme-${themeId}-bg-active`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
